@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "Ten Game Solver",
+  "description": "Provides solutions to the make ten game",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "version": "1.0"
+}
