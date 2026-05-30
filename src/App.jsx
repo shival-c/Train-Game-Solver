@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState } from "react"
 import BasicTextFields from "./components/InputFields.jsx"
@@ -129,27 +128,30 @@ function App() {
 
   /////////////////////////////////////////////////////////////
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-    {!bool && <div className="container">
+    <div className="container">
+    {!bool && <div className="inner-container">
+      <h3>Enter numbers as a single string</h3>
+      <p>Eg 1234</p>
       <BasicTextFields props={firstInput} />
+      <h3>Enter target number</h3>
+      <p>Eg 10</p>
       <BasicTextFields props={secondInput} />
 
       <Button name="Submit" handleFunction={handleCalc} />
 
       {bool && <p>Solutions are</p>}
-      {bool && uniqSols.map(e => (
-        <p key={e}>{e}</p>
-      )) }
+      {bool && uniqSols.map(e => (<p key={e}>{e}</p>))}
     </div>}
 
-    {bool && <div className="container">
+    {bool && <div>
       {bool && <p>Solutions are</p>}
-      {bool && uniqSols.map(e => (<p key={e}>{e}</p>)) }
+      {bool && uniqSols.map(e => (<p key={e}>{e}</p>))}
 
       <Button name="Reset" handleFunction={handleReset} />
     </div>}
     </div>
   );
+
 }
 
 export default App;

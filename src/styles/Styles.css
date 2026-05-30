@@ -1,10 +1,24 @@
 .container {
     background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     border-style: solid;
-    border-color: #F7567C;
+    border-color: gray;
     border-radius: 10px;
-    padding: 15px
-};
+    padding: 15px;
+}
+
+.inner-container {
+/*     background-color: blue; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-style:
+}
+
+h3 {
+    margin-bottom: 5px;
+}
+
+p {
+    margin: 0;
+    margin-bottom: 8px;
+}
