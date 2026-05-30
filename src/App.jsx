@@ -18,14 +18,14 @@ function App() {
   const uniqSolsCheck = []
 
   const firstInput = {
-    name: "Enter numbers as a single string. Eg, \"1234\"",
+    name: "Enter numbers",
     form: form,
     val: "nums",
     updateFunction: setForm,
   }
 
   const secondInput = {
-    name: "Enter target number. Eg, 10",
+    name: "Enter target number",
     form: form,
     val: "targetNum",
     updateFunction: setForm,

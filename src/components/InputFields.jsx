@@ -7,7 +7,8 @@ function BasicTextFields( {props} ) {
 
     const style = {
         borderLeftColor: "green",
-        borderLeft: "5px solid MediumSpringGreen"
+        borderLeft: "5px solid MediumSpringGreen",
+        backgroundColor: "cream",
     }
 
     return (
