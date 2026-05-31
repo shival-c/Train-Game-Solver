@@ -2,13 +2,18 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import '../styles/Styles.css'
 
-function BasicTextFields( {props} ) {
-    const { name, form, val, updateFunction } = props
+function Inputs ( {props} ) {
+    const { name, form, val, updateFunction, hasErr } = props
 
     const style = {
-        borderLeftColor: "green",
         borderLeft: "5px solid MediumSpringGreen",
         backgroundColor: "cream",
+    }
+
+    const styleErr = {
+        borderLeft: "5px solid Red",
+        backgroundColor: "cream",
+        outline: "10px Red",
     }
 
     return (
@@ -18,10 +23,10 @@ function BasicTextFields( {props} ) {
         noValidate
         autoComplete="off"
         >
-            <TextField id="outlined-basic" label={name} variant="outlined" sx={style}
+            <TextField id="outlined-basic" label={name} variant="outlined" sx={hasErr ? styleErr : style}
             onChange={(e) => updateFunction({...form, [val]: e.target.value})} value={form[val]} />
         </Box>
     );
 }
 
-export default BasicTextFields
+export default Inputs
