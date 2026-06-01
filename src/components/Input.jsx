@@ -6,13 +6,14 @@ function Inputs ( {props} ) {
     const { name, form, val, updateFunction, hasErr } = props
 
     const style = {
-        borderLeft: "5px solid MediumSpringGreen",
-        backgroundColor: "cream",
+        borderLeft: "2px groove MediumSpringGreen",
+        borderRadius: "8px",
+        backgroundColor: "white",
     }
 
     const styleErr = {
-        borderLeft: "5px solid Red",
-        backgroundColor: "cream",
+        border: "3px solid Red",
+        backgroundColor: "green",
         outline: "10px Red",
     }
 
@@ -23,8 +24,15 @@ function Inputs ( {props} ) {
         noValidate
         autoComplete="off"
         >
-            <TextField id="outlined-basic" label={name} variant="outlined" sx={hasErr ? styleErr : style}
-            onChange={(e) => updateFunction({...form, [val]: e.target.value})} value={form[val]} />
+            <TextField
+            error={hasErr}
+            id="outlined-basic"
+            label={name}
+            variant="outlined"
+            sx={!hasErr? style : {}}
+            onChange={(e) => updateFunction({...form, [val]: e.target.value})}
+            value={form[val]}
+            />
         </Box>
     );
 }

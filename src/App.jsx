@@ -1,8 +1,9 @@
 import './App.css';
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Input from "./components/Input.jsx"
 import "./styles/Styles.css"
 import Button from "./components/Button.jsx"
+import ErrorBox from './components/ErrorBox.jsx'
 
 function App() {
   const [uniqSols, setUniqSols] = useState([])
@@ -107,6 +108,16 @@ function App() {
 
   /////////////////////////////////////////////////////////////
   function handleCalc() {
+    setStrHasErr({
+      bool: false,
+      errMsg: "",
+    })
+
+    setTargHasErr({
+      bool: false,
+      errMsg: "",
+    })
+
     if (hasErrors()) {
       return
     }
@@ -138,27 +149,31 @@ function App() {
 
   /////////////////////////////////////////////////////////////
   function hasErrors() {
+    let returnVal = false
+
     // Potential errors for string
-    if (form.nums.length <= 1) {
+    if (form.nums.length === 0) {
+      const err = {
+        bool: true,
+        errMsg: "You must enter a string of numbers",
+      }
+      setStrHasErr(err)
+      returnVal = true
+    } else if (!/^\d+$/.test(form.nums)) {
+      const err = {
+        bool: true,
+        errMsg: "The string should only contain integers",
+      }
+      setStrHasErr(err)
+      returnVal = true
+    } else if (form.nums.length === 1) {
       const err = {
         bool: true,
         errMsg: "The string length is too short",
       }
       setStrHasErr(err)
-      return true
+      returnVal = true
     }
-    if (!/^\d+$/.test(form.nums)) {
-      const err = {
-        bool: true,
-        errMsg: "the string should only contain integers",
-      }
-      setStrHasErr(err)
-      return true
-    }
-    setStrHasErr({
-      bool: false,
-      errMsg: "",
-    })
 
     // Potential errors for target number
     if (form.targetNum.length === 0) {
@@ -167,20 +182,17 @@ function App() {
         errMsg: "You must enter a target number",
       }
       setTargHasErr(err)
-      return true
-    }
-    if (!/^\d+$/.test(form.targetNum)) {
+      returnVal = true
+    } else if (!/^\d+$/.test(form.targetNum)) {
       const err = {
         bool: true,
         errMsg: "The target number must be an integer",
       }
       setTargHasErr(err)
-      return true
+      returnVal = true
     }
-    setTargHasErr({
-      bool: false,
-      errMsg: "",
-    })
+
+    return returnVal
   }
 
   /////////////////////////////////////////////////////////////
@@ -189,28 +201,27 @@ function App() {
     {!bool && <div className="inner-container">
       <h1>Train Game Solver</h1>
       <h3>Enter numbers as a single string</h3>
-      <p>Eg 1234</p>
+      <p className="examples-style">Eg 1234</p>
       <Input props={firstInput} />
-      {strHasErr.bool && <>{strHasErr.errMsg}</>}
+      {strHasErr.bool && <ErrorBox errMsg={strHasErr.errMsg} />}
 
       <h3>Enter target number</h3>
-      <p>Eg 10</p>
+      <p className="examples-style">Eg 10</p>
       <Input props={secondInput} />
-      {targHasErr.bool && <>{targHasErr.errMsg}</>}
+      {targHasErr.bool && <ErrorBox errMsg={targHasErr.errMsg} />}
 
       <Button name="Submit" handleFunction={handleCalc} />
-
-      {bool && <p>Solutions are</p>}
-      {bool && uniqSols.map(e => (<p key={e}>{e}</p>))}
     </div>}
 
     {bool && <div className="inner-container">
       <h1>Train Game Solver</h1>
-      {bool && <h3>Solutions are</h3>}
-      {bool && uniqSols.map(e => (<p key={e}>{e}</p>))}
-
+      <h3>Solutions are</h3>
+      <div className="sols-container">
+        {uniqSols.map(e => (<p key={e}>{e}</p>))}
+      </div>
       <Button name="Reset" handleFunction={handleReset} />
-    </div>}
+    </div>
+    }
     </div>
   );
 
