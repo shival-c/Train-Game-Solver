@@ -1,4 +1,3 @@
-import './App.css';
 import { useState } from "react"
 import Input from "./components/Input.jsx"
 import "./styles/Styles.css"
@@ -217,7 +216,9 @@ function App() {
 
     {bool && <div className="inner-container">
       <h1>Train Game Solver</h1>
-      <h3>Solutions are</h3>
+      <div>
+        <h3>Solutions are</h3>
+      </div>
       <div className="sols-container">
         {uniqSols.map(e => (<p key={e}>{e}</p>))}
       </div>
