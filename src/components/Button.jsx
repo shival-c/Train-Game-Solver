@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 
 function Buttons( {name, handleFunction} ) {
     const style1 = {
@@ -13,18 +12,14 @@ function Buttons( {name, handleFunction} ) {
     }
 
     return (
-//         <Stack direction="row" spacing={2}>
         <Button
         variant="contained"
         onClick={handleFunction}
         sx={name === "Submit" ? style1 : style2}
+        onKeyDown={(e) => console.log(e.key)}
         >
             {name}
         </Button>
-//         <Button variant="contained" disabled>
-//         Disabled
-//         </Button>
-//         </Stack>
     );
 }
 
