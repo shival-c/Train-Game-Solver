@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Input from "./components/Input.jsx"
 import "./styles/Styles.css"
 import Button from "./components/Button.jsx"
@@ -201,12 +201,12 @@ function App() {
     {!bool && <div className="inner-container">
       <h1>Train Game Solver</h1>
       <h3>Enter numbers as a single string</h3>
-      <p>Eg 1234</p>
+      <p className="examples-style">Eg 1234</p>
       <Input props={firstInput} />
       {strHasErr.bool && <ErrorBox errMsg={strHasErr.errMsg} />}
 
       <h3>Enter target number</h3>
-      <p>Eg 10</p>
+      <p className="examples-style">Eg 10</p>
       <Input props={secondInput} />
       {targHasErr.bool && <ErrorBox errMsg={targHasErr.errMsg} />}
 
