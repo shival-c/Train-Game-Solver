@@ -22,9 +22,9 @@
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
-    display: flex;
-    flex-flow: column wrap;
     padding-top: 0.3rem;
+    column-count: 3;
+    column-rule: 1px solid black;
 }
 
 .examples-style {

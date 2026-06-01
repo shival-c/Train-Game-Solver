@@ -205,6 +205,8 @@ function App() {
       <Input props={firstInput} />
       {strHasErr.bool && <ErrorBox errMsg={strHasErr.errMsg} />}
 
+      <div style={{ margin: "10px" }}/>
+
       <h3>Enter target number</h3>
       <p className="examples-style">Eg 10</p>
       <Input props={secondInput} />
