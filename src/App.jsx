@@ -1,4 +1,3 @@
-import './App.css';
 import { useState } from "react"
 import Input from "./components/Input.jsx"
 import "./styles/Styles.css"
@@ -205,6 +204,8 @@ function App() {
       <Input props={firstInput} />
       {strHasErr.bool && <ErrorBox errMsg={strHasErr.errMsg} />}
 
+      <div style={{ margin: "10px" }}/>
+
       <h3>Enter target number</h3>
       <p className="examples-style">Eg 10</p>
       <Input props={secondInput} />
@@ -215,7 +216,9 @@ function App() {
 
     {bool && <div className="inner-container">
       <h1>Train Game Solver</h1>
-      <h3>Solutions are</h3>
+      <div>
+        <h3>Solutions are</h3>
+      </div>
       <div className="sols-container">
         {uniqSols.map(e => (<p key={e}>{e}</p>))}
       </div>
