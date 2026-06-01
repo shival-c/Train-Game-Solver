@@ -1,35 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState } from "react"
-import BasicTextFields from "./components/InputFields.jsx"
+import { useState, useEffect } from "react"
+import Input from "./components/Input.jsx"
 import "./styles/Styles.css"
 import Button from "./components/Button.jsx"
 
 function App() {
-
   const [uniqSols, setUniqSols] = useState([])
+  const sols = []
+  const uniqSolsCheck = []
+  const [bool, setBool] = useState(false)
+
+  const [strHasErr, setStrHasErr] = useState({
+    bool: false,
+    errMsg: "",
+  })
+  const [targHasErr, setTargHasErr] = useState({
+    bool: false,
+    errMsg: "",
+  })
   const [form, setForm] = useState({
     nums: "",
     targetNum: ""
   })
-
-  const [bool, setBool] = useState(false)
-
-  const sols = []
-  const uniqSolsCheck = []
-
   const firstInput = {
-    name: "Enter numbers as a single string. Eg, \"1234\"",
+    name: "Enter numbers",
     form: form,
     val: "nums",
     updateFunction: setForm,
+    hasErr: strHasErr.bool,
   }
-
   const secondInput = {
-    name: "Enter target number. Eg, 10",
+    name: "Enter target number",
     form: form,
     val: "targetNum",
     updateFunction: setForm,
+    hasErr: targHasErr.bool,
   }
 
   /////////////////////////////////////////////////////////////
@@ -102,6 +107,10 @@ function App() {
 
   /////////////////////////////////////////////////////////////
   function handleCalc() {
+    if (hasErrors()) {
+      return
+    }
+
     setBool(true)
     const res = getUniqPerms()
 
@@ -128,28 +137,83 @@ function App() {
   }
 
   /////////////////////////////////////////////////////////////
+  function hasErrors() {
+    // Potential errors for string
+    if (form.nums.length <= 1) {
+      const err = {
+        bool: true,
+        errMsg: "The string length is too short",
+      }
+      setStrHasErr(err)
+      return true
+    }
+    if (!/^\d+$/.test(form.nums)) {
+      const err = {
+        bool: true,
+        errMsg: "the string should only contain integers",
+      }
+      setStrHasErr(err)
+      return true
+    }
+    setStrHasErr({
+      bool: false,
+      errMsg: "",
+    })
+
+    // Potential errors for target number
+    if (form.targetNum.length === 0) {
+      const err = {
+        bool: true,
+        errMsg: "You must enter a target number",
+      }
+      setTargHasErr(err)
+      return true
+    }
+    if (!/^\d+$/.test(form.targetNum)) {
+      const err = {
+        bool: true,
+        errMsg: "The target number must be an integer",
+      }
+      setTargHasErr(err)
+      return true
+    }
+    setTargHasErr({
+      bool: false,
+      errMsg: "",
+    })
+  }
+
+  /////////////////////////////////////////////////////////////
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-    {!bool && <div className="container">
-      <BasicTextFields props={firstInput} />
-      <BasicTextFields props={secondInput} />
+    <div className="container">
+    {!bool && <div className="inner-container">
+      <h1>Train Game Solver</h1>
+      <h3>Enter numbers as a single string</h3>
+      <p>Eg 1234</p>
+      <Input props={firstInput} />
+      {strHasErr.bool && <>{strHasErr.errMsg}</>}
+
+      <h3>Enter target number</h3>
+      <p>Eg 10</p>
+      <Input props={secondInput} />
+      {targHasErr.bool && <>{targHasErr.errMsg}</>}
 
       <Button name="Submit" handleFunction={handleCalc} />
 
       {bool && <p>Solutions are</p>}
-      {bool && uniqSols.map(e => (
-        <p key={e}>{e}</p>
-      )) }
+      {bool && uniqSols.map(e => (<p key={e}>{e}</p>))}
     </div>}
 
-    {bool && <div className="container">
-      {bool && <p>Solutions are</p>}
-      {bool && uniqSols.map(e => (<p key={e}>{e}</p>)) }
+    {bool && <div className="inner-container">
+      <h1>Train Game Solver</h1>
+      {bool && <h3>Solutions are</h3>}
+      {bool && uniqSols.map(e => (<p key={e}>{e}</p>))}
 
       <Button name="Reset" handleFunction={handleReset} />
     </div>}
     </div>
   );
+
 }
 
 export default App;
