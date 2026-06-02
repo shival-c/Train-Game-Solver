@@ -9,6 +9,7 @@ function App() {
   const sols = []
   const uniqSolsCheck = []
   const [bool, setBool] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const [strHasErr, setStrHasErr] = useState({
     bool: false,
@@ -106,33 +107,44 @@ function App() {
   }
 
   /////////////////////////////////////////////////////////////
-  function handleCalc() {
+  async function handleCalc() {
     setStrHasErr({
       bool: false,
       errMsg: "",
-    })
+    });
 
     setTargHasErr({
       bool: false,
       errMsg: "",
-    })
+    });
 
     if (hasErrors()) {
-      return
+      return;
     }
 
-    setBool(true)
-    const res = getUniqPerms()
+    setIsLoading(true);
 
-    for (let el of res) {
-      let score = el[0]
-      let pos = 1
-      let curSol = `${el[0]}`
-      recurse(el, score, pos, curSol)
-    }
+    setTimeout(() => {
+      try {
+        setBool(true);
 
-    getUniqSols()
+        const res = getUniqPerms();
 
+        for (const el of res) {
+          let score = el[0];
+          let pos = 1;
+          let curSol = `${el[0]}`;
+
+          recurse(el, score, pos, curSol);
+        }
+
+        getUniqSols();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 0)
   }
 
   /////////////////////////////////////////////////////////////
@@ -197,7 +209,7 @@ function App() {
   /////////////////////////////////////////////////////////////
   return (
     <div className="container">
-    {!bool && <div className="inner-container">
+    {!bool && !isLoading && <div className="inner-container">
       <h1>Train Game Solver</h1>
       <h3>Enter numbers as a single string</h3>
       <p className="examples-style">Eg 1234</p>
@@ -214,13 +226,18 @@ function App() {
       <Button name="Submit" handleFunction={handleCalc} />
     </div>}
 
-    {bool && <div className="inner-container">
+    {isLoading && <div className="inner-container">
+      <h1>Train Game Solver</h1>
+        <p>Loading...</p>
+      </div>}
+
+    {bool && !isLoading && <div className="inner-container">
       <h1>Train Game Solver</h1>
       <div>
         <h3>Solutions are</h3>
       </div>
       <div className="sols-container">
-        {uniqSols.map(e => (<p key={e}>{e}</p>))}
+        {uniqSols.length === 0 ? <p>No Solutions</p> : uniqSols.map(e => (<p key={e}>{e}</p>))}
       </div>
       <Button name="Reset" handleFunction={handleReset} />
     </div>
